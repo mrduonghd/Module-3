@@ -1,0 +1,1 @@
+<a href="{{route('task.index')}}">Home</a>
