@@ -6,6 +6,7 @@ use App\Http\Requests\CreateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -18,6 +19,9 @@ class ProductController extends Controller
 
     function create()
     {
+        // if(! Gate::allows('crud-product')){
+        //     abort(403);
+        // }
         $categories = Category::all();
         return view('admin.products.create', compact('categories'));
     }

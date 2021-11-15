@@ -25,6 +25,7 @@ class CreateAccountRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'role' => 'boolean',
             'email' => 'required|email:rfc,dns|unique:accounts',
             'pwd' => 'min:6'
         ];
@@ -34,6 +35,7 @@ class CreateAccountRequest extends FormRequest
     {
         return [
             'name.required' => 'Khong duoc de trong',
+            'role.boolean' => 'admin:1 , another:0',
             'email.required' => 'Khong duoc de trong',
             'email.email' => 'Email cua ban khong dung dinh dang',
             'email.unique' => 'Email cua ban da ton tai',

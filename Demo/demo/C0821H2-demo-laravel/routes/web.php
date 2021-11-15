@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix('carts')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('cart.index');
@@ -26,7 +27,7 @@ Route::prefix('carts')->group(function () {
     Route::get('/{index}/remove', [CartController::class, 'remove'])->name('cart.remove');
 });
 
-Route::middleware('checkLogin')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/home', function () {
         return view('welcome');
     });
@@ -40,8 +41,17 @@ Route::middleware('checkLogin')->group(function () {
             Route::post('/{id}/update', [ProductController::class, 'edit'])->name('products.edit');
             Route::post('/delete', [ProductController::class, 'delete'])->name('products.delete');
         });
-        Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
-        Route::get('users/{id}/delete', [UserController::class, 'destroy'])->name('users.delete');
+
+        Route::prefix('users')->group(function(){
+            Route::get('', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+            Route::get('create', [\App\Http\Controllers\UserController::class, 'create'])->name('users.create');
+            Route::post('store', [\App\Http\Controllers\UserController::class, 'store'])->name('users.store');
+            Route::get('edit/{id}', [\App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
+            Route::post('edit/{id}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+            Route::get('delete/{id}', [UserController::class, 'destroy'])->name('users.delete');
+            Route::get('changePwd', [UserController::class, 'changePwd'])->name('users.change');
+            Route::post('pwdStore', [UserController::class, 'pwdStore'])->name('users.pwdStore');
+        });
 
         Route::prefix('categories')->group(function(){
             Route::get('', [CategoryController::class, 'index'])->name('categories.index');
@@ -59,8 +69,9 @@ Route::middleware('checkLogin')->group(function () {
             Route::get('edit/{id}', [AccountController::class, 'edit'])->name('accounts.edit');
             Route::post('edit/{id}', [AccountController::class, 'update'])->name('accounts.update');
             Route::get('delete/{id}', [AccountController::class, 'destroy'])->name('accounts.destroy');
-
         });
+
+        Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
     });
 });
 
@@ -69,15 +80,5 @@ Route::get('/login', function () {
     return view('login');
 })->name('showFormLogin');
 
-Route::post('/login', function (\Illuminate\Http\Request $request) {
-    $username = $request->username;
-    $password = $request->password;
-
-    if ($username == 'admin' && $password == '123456') {
-        session()->push('isLogin', true);
-        return redirect()->route('users.index');
-    } else {
-        return redirect('login');
-    }
-});
+Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 

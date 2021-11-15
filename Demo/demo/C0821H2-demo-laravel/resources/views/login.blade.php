@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
 <body>
-{{ $message }}
 <div class="container">
     <div class="d-flex justify-content-center h-100">
         <div class="card">
@@ -39,6 +38,9 @@
                         </div>
                         <input type="password" class="form-control" name="password" placeholder="password">
                     </div>
+                    @if (session()->has('errorLogin'))
+                        <div class="alert alert-danger">{{ session()->get('errorLogin') }}</div>
+                    @endif
                     <div class="row align-items-center remember">
                         <input type="checkbox">Remember Me
                     </div>
