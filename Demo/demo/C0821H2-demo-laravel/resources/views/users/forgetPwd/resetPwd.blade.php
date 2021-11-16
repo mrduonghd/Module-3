@@ -22,36 +22,41 @@
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header">
-                    <h3>Sign In</h3>
+                    <h3>Reset Password</h3>
                     <div class="d-flex justify-content-end social_icon">
                         {{-- <span><i class="fa fa-facebook-square"></i></span> --}}
-                        <span><a href="{{ url('/auth/redirect/google') }}"><i class="fa fa-google-plus-square"></i></a></span>
                         {{-- <span><i class="fa fa-twitter-square"></i></span> --}}
                     </div>
                 </div>
                 <div class="card-body">
-                    <form method="post">
+                    <form method="post" action="{{ route('reset.password.post') }}">
                         @csrf
+                        <input type="hidden" name="token" value="{{ $token }}">
+
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control" name="username" placeholder="email">
+                            <input type="text" id="email_address" class="form-control" name="email" placeholder="email" required autofocus>
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-key"></i></span>
                             </div>
-                            <input type="password" class="form-control" name="password" placeholder="password">
+                            <input type="password" id="password" class="form-control" name="password" placeholder="password" required autofocus>
                         </div>
                         @if (session()->has('errorLogin'))
                             <div class="alert alert-danger">{{ session()->get('errorLogin') }}</div>
                         @endif
-                        <div class="row align-items-center remember">
-                            <input type="checkbox">Remember Me
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-key"></i></span>
+                            </div>
+                            <input type="password" id="password-confirm" class="form-control" name="password_confirmation" placeholder="cfm-pwd" required autofocus>
                         </div>
+                        
                         <div class="form-group">
-                            <input type="submit" value="Login" class="btn float-right login_btn">
+                            <input type="submit" value="ResetPassword" class="btn float-right login_btn">
                         </div>
 
                     </form>

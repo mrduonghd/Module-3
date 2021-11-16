@@ -6,6 +6,7 @@ use App\Http\Requests\CreateAccountRequest;
 use App\Http\Requests\PasswordRequest;
 use App\Http\Services\UserService;
 use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -101,14 +102,15 @@ class UserController extends Controller
     public function pwdStore(PasswordRequest $request)
     {
 
-        if (Hash::check($request->input('oldpwd'),Auth::user()->password)) {
+        if (Hash::check($request->input('oldpwd'), Auth::user()->password)) {
 
             User::find(auth()->user()->id)->update(['password' => Hash::make($request->input('newpwd'))]);
 
-
-            return redirect()->route('products.index')->with('success', 'Cap nhap thanh cong');
+            Toastr::success('success', 'Cap nhap thanh cong');
+            return redirect()->route('products.index');
         }
-        return redirect()->back()->with('error', 'Old password khong dung');
+        Toastr::error('error', 'Old password khong dung');
+        return redirect()->back();
 
         // if (!(Hash::check($request->get('oldpwd'), Auth::user()->password))) {
         //     // The passwords matches
@@ -127,5 +129,21 @@ class UserController extends Controller
 
         // return redirect()->back()->with("success","Password changed successfully !");
 
+    }
+
+    public function register(){
+        return view('users.register');
+    }
+
+    public function rgStore(CreateAccountRequest $request){
+        $user = new User();
+        $user->name = $request->input('username');
+        $user->email = $request->input('email');
+        $user->role = 0;
+        $user->password = Hash::make($request->input('password'));
+        
+        Toastr::success('dang ky thanh cong', 'Success!!!');
+        $user->save();
+        return redirect()->route('showFormLogin');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -19,6 +20,7 @@ class AuthController extends Controller
         ];
 
         if (Auth::attempt($data)) {
+            Toastr::success('Dang nhap thanh cong','Success!');
             return redirect()->route('products.index');
         } else {
             Session::flash('errorLogin','Tai khoan khong chinh xac');

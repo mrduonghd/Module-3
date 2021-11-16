@@ -13,65 +13,44 @@
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
-    
+
 
 </head>
 
 <body>
+
     <div class="container">
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header">
-                    <h3>Sign In</h3>
+                    <h3>Forgot Password</h3>
                     <div class="d-flex justify-content-end social_icon">
                         {{-- <span><i class="fa fa-facebook-square"></i></span> --}}
-                        <span><a href="{{ url('/auth/redirect/google') }}"><i class="fa fa-google-plus-square"></i></a></span>
+                        <span><a href="{{ url('/auth/redirect/google') }}"><i
+                                    class="fa fa-google-plus-square"></i></a></span>
                         {{-- <span><i class="fa fa-twitter-square"></i></span> --}}
                     </div>
                 </div>
                 <div class="card-body">
-                    <form method="post">
+                    <form method="post" action="{{ route('forget.password.post') }}">
                         @csrf
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                <input type="text" id="email_address" class="form-control" name="email"
+                                    placeholder="E-Mail Address" required autofocus>
+                                @error('email')
+                                    <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
-                            <input type="text" class="form-control" name="username" placeholder="email">
                         </div>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-key"></i></span>
-                            </div>
-                            <input type="password" class="form-control" name="password" placeholder="password">
-                        </div>
-                        @if (session()->has('errorLogin'))
-                            <div class="alert alert-danger">{{ session()->get('errorLogin') }}</div>
-                        @endif
-                        <div class="row align-items-center remember">
-                            <input type="checkbox">Remember Me
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Login" class="btn float-right login_btn">
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                                Send Password Reset Link
+                            </button>
                         </div>
 
                     </form>
 
-                </div>
-                {{-- <hr> --}}
-
-                {{-- <div class="form-group row mb-0">
-                    <div class="col-md-8 offset-md-4">
-                        <a href="{{ url('/auth/redirect/google') }}" class="btn btn-primary"><i
-                                class="fa fa-google"></i> Google</a>
-                    </div>
-                </div> --}}
-                <div class="card-footer">
-                    <div class="d-flex justify-content-center links">
-                        Don't have an account?<a href="{{ route('register') }}">Sign Up</a>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <a href="{{ route('forget.password.get') }}">Forgot your password?</a>
-                    </div>
                 </div>
             </div>
         </div>

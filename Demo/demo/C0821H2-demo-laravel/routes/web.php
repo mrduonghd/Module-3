@@ -4,7 +4,9 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ForgotPwdController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -81,4 +83,17 @@ Route::get('/login', function () {
 })->name('showFormLogin');
 
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+
+Route::get('/auth/redirect/{provider}', [SocialController::class,'redirect']);
+
+Route::get('/callback/{provider}',[SocialController::class, 'callback']);
+
+Route::get('/register', [UserController::class, 'register'])->name('register');
+Route::post('/register', [UserController::class, 'rgStore'])->name('rgStore');
+
+Route::get('forgotPwd', [ForgotPwdController::class, 'showFgPwdForm'])->name('forget.password.get');
+Route::post('forgotPwd', [ForgotPwdController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::get('reset-password/{token}', [ForgotPwdController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPwdController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
 

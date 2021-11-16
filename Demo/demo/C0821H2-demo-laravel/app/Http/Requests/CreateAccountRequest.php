@@ -24,10 +24,10 @@ class CreateAccountRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'role' => 'boolean',
-            'email' => 'required|email:rfc,dns|unique:accounts',
-            'pwd' => 'min:6'
+            'username' => 'required',
+            'email' => 'required|email:rfc,dns|unique:users',
+            'password' => 'min:6',
+            'cfm-password' => 'required|same:password'
         ];
     }
 
@@ -35,11 +35,11 @@ class CreateAccountRequest extends FormRequest
     {
         return [
             'name.required' => 'Khong duoc de trong',
-            'role.boolean' => 'admin:1 , another:0',
             'email.required' => 'Khong duoc de trong',
             'email.email' => 'Email cua ban khong dung dinh dang',
             'email.unique' => 'Email cua ban da ton tai',
-            'pwd.min' => 'Toi thieu 6 ki tu'
+            'password.min' => 'Toi thieu 6 ki tu',
+            'cfm-password.same' => 'Mat khau xac nhan khong dung' 
         ];
     }
 }

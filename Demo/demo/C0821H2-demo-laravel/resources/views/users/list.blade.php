@@ -26,8 +26,11 @@
                         <td colspan="2">Action</td>
                     </tr>
                     @foreach ($users as $key => $user)
+                        @if (Auth::user()->id == $user->id)
+                            @continue
+                        @endif
                         <tr class="user-item" id="user-item-{{ $user->id }}">
-                            <td>{{ $key + 1 }}</td>
+                            <td>{{ ++$key }}</td>
                             <td class="column-name">{{ $user['name'] }}</td>
                             <td>{{ $user->role }}</td>
                             <td>{{ $user['email'] }}</td>
