@@ -43,7 +43,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6 offset-md-4">
+                        <div class="">
                             <button type="submit" class="btn btn-primary">
                                 Send Password Reset Link
                             </button>

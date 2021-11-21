@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EmailRequest;
 use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,6 +34,7 @@ class ForgotPwdController extends Controller
               $message->subject('Reset Password');
           });
   
+          Toastr::success('Kiem tra email cua ban', 'Sended!!!');
           return back()->with('message', 'We have e-mailed your password reset link!');
       }
 

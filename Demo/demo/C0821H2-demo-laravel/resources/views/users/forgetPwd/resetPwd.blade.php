@@ -72,11 +72,11 @@
                 </div> --}}
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">
-                        Don't have an account?<a href="{{ route('register') }}">Sign Up</a>
+                        Are have an account?<a href="{{ route('showFormLogin') }}">Sign Up</a>
                     </div>
-                    <div class="d-flex justify-content-center">
+                    {{-- <div class="d-flex justify-content-center">
                         <a href="{{ route('forget.password.get') }}">Forgot your password?</a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

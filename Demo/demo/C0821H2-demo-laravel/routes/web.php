@@ -85,8 +85,7 @@ Route::get('/login', function () {
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::get('/auth/redirect/{provider}', [SocialController::class,'redirect']);
-
-Route::get('/callback/{provider}',[SocialController::class, 'callback']);
+Route::get('/callback/{provider}',[SocialController::class, 'callback']);   
 
 Route::get('/register', [UserController::class, 'register'])->name('register');
 Route::post('/register', [UserController::class, 'rgStore'])->name('rgStore');
