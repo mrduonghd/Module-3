@@ -1,3 +1,6 @@
+
+@can('crud')
+    
 @extends('admin.master')
 @section('admin-content')
 <div class="col-12 mt-2">
@@ -15,26 +18,27 @@
             </tr>
             @forelse($categories as $key => $category)
             @if ($category->id == 0)
-                @continue             
+            @continue             
             @endif
-                <tr>
-                    <td>{{ $key ++ }}</td>
-                    <td>{{ $category->name }}</td>
-                    {{-- <td>
-                        {{ $product->category->name ?? 'Chưa phân loại' }}
-                    </td> --}}
-                    {{-- <td>{{ $category->description }} </td> --}}
-                    <td><a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary">Cập nhật</a>
-                    </td>
-                    <td><a href="{{ route('categories.destroy', $category->id) }}" class="btn btn-danger">Xoa</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ $key ++ }}</td>
+                <td>{{ $category->name }}</td>
+                {{-- <td>
+                    {{ $product->category->name ?? 'Chưa phân loại' }}
+                </td> --}}
+                {{-- <td>{{ $category->description }} </td> --}}
+                <td><a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary">Cập nhật</a>
+                </td>
+                <td><a href="{{ route('categories.destroy', $category->id) }}" onclick="return confirm('Ban co chac muon xoa ?')" class="btn btn-danger">Xoa</a>
+                </td>
+            </tr>
             @empty
-                <tr>
-                    <td colspan="4">No data</td>
-                </tr>
+            <tr>
+                <td colspan="4">No data</td>
+            </tr>
             @endforelse
         </table>
     </div>
 </div>
 @endsection
+@endcan

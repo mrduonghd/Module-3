@@ -1,3 +1,5 @@
+@can('crud')
+    
 @extends('admin.master')
 @section('admin-content')
 <div class="col-12 mt-2">
@@ -19,30 +21,31 @@
                 <th colspan="2">Action</th>
             </tr>
             @forelse($books as $key => $book)
-                <tr>
-                    <td>{{ $key + 1 }}</td>
-                    <td>{{ $book->title }}</td>
-                    <td>
-                        {{ $book->authors->firstName ?? 'chua co tac gia'}}
-                    </td>
-                    <td>{{ $book->publicationYear }}</td>
-                    <td><img src="{{ asset('storage/' . $book->image) }}" alt="" width="100"></td>
-                    <td>
-                        {{ $book->categories->name ?? 'Chua phan loai'}}
-                    </td>
-                    <td>{{ number_format($book->price) }} </td>
-                    {{-- <td>{{ $book->description }} </td> --}}
-                    <td><a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning">Cập nhật</a>
-                    </td>
-                    <td><a href="{{ route('books.destroy', $book->id) }}" class="btn btn-danger">Xoa</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ $key + 1 }}</td>
+                <td>{{ $book->title }}</td>
+                <td>
+                    {{ $book->authors->firstName ?? 'chua co tac gia'}}
+                </td>
+                <td>{{ $book->publicationYear }}</td>
+                <td><img src="{{ asset('storage/' . $book->image) }}" alt="" width="100"></td>
+                <td>
+                    {{ $book->categories->name ?? 'Chua phan loai'}}
+                </td>
+                <td>{{ number_format($book->price) }} </td>
+                {{-- <td>{{ $book->description }} </td> --}}
+                <td><a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning">Cập nhật</a>
+                </td>
+                <td><a href="{{ route('books.destroy', $book->id) }}" onclick="return confirm('Ban co chac muon xoa ?')" class="btn btn-danger">Xoa</a>
+                </td>
+            </tr>
             @empty
-                <tr>
-                    <td colspan="8">No data</td>
-                </tr>
+            <tr>
+                <td colspan="8">No data</td>
+            </tr>
             @endforelse
         </table>
     </div>
 </div>
 @endsection
+@endcan

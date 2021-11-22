@@ -32,12 +32,15 @@
                             <li>
                                 <a href="{{ route('books.showAll') }}">Book Catalog</a>
                             </li>
+                            @if (Auth::user())
                             <li>
                                 <a href="{{ route('carts.show-cart') }}">checkout</a>
                             </li>
                             <li>
                                 <a href="payment.html">Payment</a>
                             </li>
+                                
+                            @endif
                         </ul>
                     </li>
                     <li>

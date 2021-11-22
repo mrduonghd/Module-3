@@ -4,28 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
     public function addToCart($id){
         // session()->flush('cart');
-        $book = Book::findOrFail($id);
-        $cart = session()->get('cart');
-        if(isset($cart[$id])){
-            $cart[$id]['quantity'] = $cart[$id]['quantity'] + 1;
+        if (Auth::user()){
+            $book = Book::findOrFail($id);
+            $cart = session()->get('cart');
+            if(isset($cart[$id])){
+                $cart[$id]['quantity'] = $cart[$id]['quantity'] + 1;
+            }else{
+                $cart[$id] = [
+                    'name' => $book->title,
+                    'price' => $book->price,
+                    'quantity' => 1,
+                    'image' => $book->image,
+                ];
+            }
+            session()->put('cart',$cart);
+            return response()->json([
+                'code' => 200,
+                'message' => 'success'
+            ], 200);
         }else{
-            $cart[$id] = [
-                'name' => $book->title,
-                'price' => $book->price,
-                'quantity' => 1,
-                'image' => $book->image,
-            ];
+            return redirect()->route('showFormLogin');
         }
-        session()->put('cart',$cart);
-        return response()->json([
-            'code' => 200,
-            'message' => 'success'
-        ], 200);
     }
 
     public function showCart(){

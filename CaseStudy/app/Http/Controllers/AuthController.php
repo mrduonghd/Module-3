@@ -7,6 +7,7 @@ use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -25,12 +26,16 @@ class AuthController extends Controller
 
         if (Auth::attempt($data)) {
             if (Auth::user()->role == '1') {
+                // Session::flash('success', 'Dang nhap thanh cong');
+
+
                 Toastr::success('Dang nhap thanh cong', 'Success!');
-                return redirect()->route('dashboard');
+                return redirect()->route('dashboard')->with('success','Dang nhap thanh cong');
             }
             return redirect()->route('home');
         } else {
-            Toastr::error('Tai khoan khong chinh xac', 'Error!!!');
+            // Toastr::error('Tai khoan khong chinh xac', 'Error!!!');
+            Session::flash('errorLogin', 'Tai khoan khong chinh xac');
             return redirect()->back();
         }
     }

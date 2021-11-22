@@ -6,6 +6,7 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class BookController extends Controller
 {
@@ -29,6 +30,9 @@ class BookController extends Controller
      */
     public function create()
     {
+        // if(! Gate::allows('crud-product')){
+        //     abort(403);
+        // }
         $categories = Category::all();
         $authors = Author::all();
         return view('books.create', compact('categories','authors'));

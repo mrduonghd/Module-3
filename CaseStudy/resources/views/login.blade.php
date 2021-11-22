@@ -55,8 +55,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form class="text-start" action="{{ route('auth.login') }}"
-                                    method="POST">
+                                <form class="text-start" action="{{ route('auth.login') }}" method="POST">
                                     @csrf
                                     <div class="input-group input-group-outline my-3">
                                         <label class="form-label">Email</label>
@@ -78,6 +77,9 @@
                                         <input class="form-check-input" type="checkbox" id="rememberMe">
                                         <label class="form-check-label mb-0 ms-2" for="rememberMe">Remember me</label>
                                     </div>
+                                    @if (session()->has('errorLogin'))
+                                        <div class="alert alert-danger text-white">{{ session()->get('errorLogin') }} !!!</div>
+                                    @endif
                                     <div class="text-center">
                                         <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign
                                             in</button>
@@ -87,7 +89,9 @@
                                         <a href="{{ route('rgt') }}"
                                             class="text-primary text-gradient font-weight-bold">Sign up</a>
                                     </p>
-                                    <p class="mt-4 text-sm text-center"><a class="text-primary text-gradient font-weight-bold" href="{{ route('forget.password.get') }}">Forgot Password</a></p>
+                                    <p class="mt-4 text-sm text-center"><a
+                                            class="text-primary text-gradient font-weight-bold"
+                                            href="{{ route('forget.password.get') }}">Forgot Password</a></p>
                                 </form>
                             </div>
                         </div>
@@ -134,9 +138,11 @@
         </div>
     </main>
     <!--   Core JS Files   -->
+    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-        {{-- {!! Toastr::message() !!} --}}
+    {{-- {!! Toastr::message() !!} --}}
+    {{-- message toastr --}}
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
@@ -401,6 +407,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('assets/js/material-dashboard.min.js?v=3.0.0') }}"></script>
+    {{-- @if (session()->has('success'))
+        <script>
+            toastr.success('asdadsad');
+        </script>
+    @endif --}}
 </body>
 
 </html>
